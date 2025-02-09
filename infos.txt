@@ -1,0 +1,30 @@
+fork() => split the main process into two processes or two lines of executions
+		  and returns an id and the child process has always 0. and the child process has
+		  exactly the same memory as the main process.
+wait() => this function interrupt the main process until the child process complete its 
+		  execution. and it waits only for one child process to complete its execution for 
+		  example if we have a parent process has two children the first one complete its exe..
+		  will terminate the wait and then the parent will terminate its exe.. and we can fix that
+		  using a while loop (while (wait(NULL) != -1 || errno != ECHILD)).
+
+pipe() => this function creates or opens two files in memory. the fd[0] is for reading and fd[1] is
+		  is for writing and it returns 0 in sucess and -1 it is not.
+
+mkfifo() => its actually named pipe or it does the same job as pipe but it can create just one files
+		    and when you try to open that file or reading it the open or write function will block untill
+			another process reading or writing to that file.
+
+		#___________exec family function___________#
+_execl() => this function executes another program but it will create another process on the top of the main 
+			process so it will overwrite the main process and it will execute just what is in its pramaters.
+			so we usually call these exec functions in child processes;
+_execlp() => this function is the same as _execl(). just this one uses the path variable to look at the path of
+			 the executable of a command to execute. so instead ot passing it a the whole path we pass just the
+			 name of the command and it will search for this executable file in the system
+
+		#____________duplicate fd functions_________#
+
+dup() => this function takes as a parameter an fd, and it duplicate or clone the current fd and returns a new fd.
+dup2() => this function is similar to dup() but it takes another parameter called fd2 and its value that dup2() will
+		  assign to the duplicated file , and when an fd is already exist it close it and relplace it with the duplicated
+		  even if it 1 or 0 or 2 
