@@ -5,6 +5,7 @@ RM = rm -f
 NAME = pipex
 
 SRCS = pipex.c \
+	   parsing.c \
 	   ./ft_printf/ft_printf.c \
 	   ./ft_printf/ft_printf_utils.c 
 
