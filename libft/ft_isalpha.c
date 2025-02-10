@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/10 11:53:19 by mait-all         ###   ########.fr       */
+/*   Created: 2024/10/29 10:25:25 by mait-all          #+#    #+#             */
+/*   Updated: 2024/10/29 11:10:21 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
-#include <stdio.h> // why you're look at me
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include "./libft/libft.h"
-#include "./ft_printf/ft_printf.h"
+#include "libft.h"
 
-#endif
+int	ft_isalpha(int c)
+{
+	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
+}

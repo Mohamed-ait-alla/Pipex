@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/10 11:53:19 by mait-all         ###   ########.fr       */
+/*   Created: 2024/10/29 10:33:51 by mait-all          #+#    #+#             */
+/*   Updated: 2024/10/29 20:40:08 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
-#include <stdio.h> // why you're look at me
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include "./libft/libft.h"
-#include "./ft_printf/ft_printf.h"
+#include "libft.h"
 
-#endif
+int	ft_isprint(int c)
+{
+	return (c >= 32 && c <= 126);
+}

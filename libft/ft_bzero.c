@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/10 11:53:19 by mait-all         ###   ########.fr       */
+/*   Created: 2024/10/23 12:13:46 by mait-all          #+#    #+#             */
+/*   Updated: 2024/10/31 20:58:35 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
-#include <stdio.h> // why you're look at me
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include "./libft/libft.h"
-#include "./ft_printf/ft_printf.h"
+#include "libft.h"
 
-#endif
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+		*(unsigned char *)(s + i++) = 0;
+}
