@@ -6,6 +6,8 @@ NAME = pipex
 
 SRCS = pipex.c \
 	   parsing.c \
+	   redirect_io.c \
+	   run_commands.c \
 	   ./ft_printf/ft_printf.c \
 	   ./ft_printf/ft_printf_utils.c 
 

@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:30:40 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/10 21:34:17 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:03:01 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_exec_path(char **env, char *cmd)
 		if (access(exec_path, F_OK) == 0 && access(exec_path, X_OK) == 0)
 			return (exec_path);
 	}
-	path = ft_memchr(env[19], '/', ft_strlen(env[19]));
+	path = ft_memchr(env[18], '/', ft_strlen(env[18]));
 	env_paths = ft_split(path, ':');
 	i = 0;
 	while (env_paths[i])
