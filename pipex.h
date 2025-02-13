@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/12 11:22:55 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:35:26 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/wait.h>
 #include "./libft/libft.h"
 #include "./ft_printf/ft_printf.h"
+#include "./get_next_line/get_next_line.h"
 
 
 char	*get_exec_path(char **env, char *cmd);

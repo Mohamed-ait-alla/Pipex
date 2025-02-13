@@ -9,7 +9,9 @@ SRCS = pipex.c \
 	   redirect_io.c \
 	   run_commands.c \
 	   ./ft_printf/ft_printf.c \
-	   ./ft_printf/ft_printf_utils.c 
+	   ./ft_printf/ft_printf_utils.c \
+	   ./get_next_line/get_next_line.c \
+	   ./get_next_line/get_next_line_utils.c
 
 S_OBJS = ${SRCS:.c=.o}
 
