@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:49:02 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/12 11:53:54 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:18:53 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int	main(int argc, char **argv, char **env)
 	int pids[n_of_cmds];
 	int	i;
 	
+	// check the arguments
+	if (argc < 4)
+		return (1);
 	// create pipes
 	i = 0;
 	while (i < n_of_cmds - 1)
