@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/13 10:35:26 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:37:15 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	redirect_input_from_pipe(int read_pipe_end);
 void	redirect_output_to_file(char *file);
 void	redirect_output_to_pipe(int write_pipe_end);
 void	execute_command(char *cmd, char **env);
+void	here_doc_execution(char **argv, char **env);
 #endif

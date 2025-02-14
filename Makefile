@@ -8,6 +8,7 @@ SRCS = pipex.c \
 	   parsing.c \
 	   redirect_io.c \
 	   run_commands.c \
+	   here_doc.c \
 	   ./ft_printf/ft_printf.c \
 	   ./ft_printf/ft_printf_utils.c \
 	   ./get_next_line/get_next_line.c \
