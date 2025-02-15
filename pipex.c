@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:49:02 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/13 21:50:26 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/15 10:10:42 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	main(int argc, char **argv, char **env)
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		// here-doc execution 
-		here_doc_execution(argv, env);
+		n_of_cmds = argc - 4;
+		here_doc_execution(argc, argv, env, n_of_cmds);
 		return (0);
 	}
 	// create pipes

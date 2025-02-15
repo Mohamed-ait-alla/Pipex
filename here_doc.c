@@ -6,104 +6,65 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/14 11:20:45 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/15 10:28:14 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	here_doc_execution(char **argv, char **env)
+void	here_doc_execution(int argc, char **argv, char **env, int n_of_cmds)
 {
-	char	**args;
-	char	**args1;
-	char	*line;
-	char	*exec_path;
-	char	*limiter;
-	int		tmp_fd;
-	int		outfile;
-	int		p_chanel[2];
-	int		pid1, pid2;
-
-	if (pipe(p_chanel) == -1)
+	int pipes[n_of_cmds - 1][2];
+	int	pids[n_of_cmds];
+	int	i;
+	
+	// creating pipes
+	i = 0;
+	while (i < n_of_cmds - 1)
 	{
-		perror("Failed to create here-doc pipe\n");
-		exit(1);
-	}
-	pid1 = fork();
-	if (pid1 == -1)
-	{
-		perror("fork has been failed to create first child\n");
-		exit(1);
-	}
-	// first child that will execute the first command 
-	if (pid1 == 0)
-	{
-		tmp_fd = open("/tmp/tmp_data", O_WRONLY | O_CREAT | O_APPEND , 0644);
-		if (tmp_fd < 0)
+		if (pipe(pipes[i]) == -1)
 		{
-			perror("Failed to open here-doc fds\n");
+			perror("Failed to create the pipes");
 			exit(1);
 		}
-		line = get_next_line(0);
-		limiter = ft_strjoin(argv[2], "\n");
-		while (line && (ft_strncmp(line, limiter, ft_strlen(line)) != 0))
-		{
-			write(tmp_fd, line, ft_strlen(line));
-			free(line);
-			line = get_next_line(0);
-		}
-		close (tmp_fd);
-		tmp_fd = open("/tmp/tmp_data", O_RDONLY);
-		free(limiter);
-		dup2(tmp_fd, STDIN_FILENO);
-		dup2(p_chanel[1], STDOUT_FILENO);
-		close (p_chanel[1]);
-		close (p_chanel[0]);
-		close(tmp_fd);
-		args = ft_split(argv[3], ' ');
-		exec_path = get_exec_path(env, args[0]);
-		if (!exec_path)
-		{
-			perror("Command Not found\n");
-			exit(1);
-		}
-		execve(exec_path, args, NULL);
-		perror("execve has been failed in here-doc\n");
+		i++;
 	}
-	pid2 = fork();
-	if (pid2 == -1)
+	i = 0;
+	while (i < n_of_cmds)
 	{
-		perror("fork has been failed to create second child\n");
-		exit(1);
+		// create child process that will execute the commands
+		pids[i] = fork();
+		if (pids[i] == -1)
+		{
+			perror("Failed to create a child process here-doc\n");
+			exit(1);
+		}
+		if (pids[i] == 0)
+		{
+			// if i is 0 => reads from the here_doc (tmp_data)
+			if (i == 0)
+				redirect_input_from_file_here_doc(argv[2]);
+			// else reads from a pipe
+			else
+				redirect_input_from_pipe(pipes[i - 1][0]);
+			// if i is equal to the pre-last command => output to outfile.txt
+			if (i == n_of_cmds - 1)
+				redirect_output_to_file(argv[argc - 1]);
+			// else output to a pipe
+			else
+				redirect_output_to_pipe(pipes[i][1]);
+			close_unused_pipes(pipes, n_of_cmds - 1);
+			execute_command(argv[i + 3], env);
+		}
+		i++;
 	}
-	// second child process that will execute the second command 
-	if (pid2 == 0)
+	close_unused_pipes(pipes, n_of_cmds - 1);
+	i = 0;
+	while (i < n_of_cmds)
 	{
-		outfile = open(argv[5], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (outfile < 0)
-		{
-			perror("Failed to open here-doc fds\n");
-			exit(1);
-		}
-		dup2(outfile, STDOUT_FILENO);
-		close (outfile);
-		dup2(p_chanel[0], STDIN_FILENO);
-		close (p_chanel[0]);
-		close (p_chanel[1]);
-		args1 = ft_split(argv[4], ' ');
-		exec_path = get_exec_path(env, args1[0]);
-		if (!exec_path)
-		{
-			perror("Command Not found\n");
-			exit(1);
-		}
-		execve(exec_path, args1, NULL);
-		perror("execve has been failed in here-doc\n");
+		waitpid(pids[i], NULL, 0);
+		i++;
 	}
-	close (p_chanel[0]);
-	close (p_chanel[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
 	// remove the tmp file after the execution
 	if (unlink("/tmp/tmp_data") == -1)
 		perror("Failed to remove temporary file\n");
