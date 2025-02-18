@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_commands.c                                     :+:      :+:    :+:   */
+/*   run_commands_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:13:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/15 09:53:19 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:43:25 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	execute_command(char *cmd, char **env)
 {
@@ -21,10 +21,10 @@ void	execute_command(char *cmd, char **env)
 	path = get_exec_path(env, args[0]);
 	if (!path)
 	{
-		printf("path=%s\n", path);
-		perror("Command Not Found\n");
-		exit(1);
+		perror("Command Not found");
+		exit(127);
 	}
 	execve(path, args, NULL);
-	perror("Error in creating new process\n");
+	perror("Failed to create new process.");
+	exit(1);
 }

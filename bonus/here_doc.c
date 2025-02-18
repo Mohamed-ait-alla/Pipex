@@ -6,11 +6,11 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/15 10:28:14 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:42:40 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	here_doc_execution(int argc, char **argv, char **env, int n_of_cmds)
 {

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 10:20:44 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/15 10:26:35 by mait-all         ###   ########.fr       */
+/*   Created: 2025/02/17 15:39:43 by mait-all          #+#    #+#             */
+/*   Updated: 2025/02/17 15:39:46 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	redirect_input_from_file(char *file)
 	if (fd < 0)
 	{
 		perror("Failed to open fd\n");
-		return ;
+		exit(126) ;
 	}
 	dup2(fd, STDIN_FILENO);
 	close (fd);

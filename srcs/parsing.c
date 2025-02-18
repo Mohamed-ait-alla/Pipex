@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 17:30:40 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/13 09:42:56 by mait-all         ###   ########.fr       */
+/*   Created: 2025/02/17 15:48:47 by mait-all          #+#    #+#             */
+/*   Updated: 2025/02/17 15:54:11 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ char	*get_exec_path(char **env, char *cmd)
 
 	if (cmd && (cmd[0] == '.' || cmd[0] == '/'))
 	{
-		exec_path = ft_memchr(cmd, '/', ft_strlen(cmd));
-		if (access(exec_path, F_OK) == 0 && access(exec_path, X_OK) == 0)
-			return (exec_path);
+		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
+			return (cmd);
+		return (NULL);
 	}
 	path = get_env_path(env);
 	env_paths = ft_split(path, ':');
