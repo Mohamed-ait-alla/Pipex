@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:28:14 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/18 09:40:39 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:40:36 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
+#include <string.h>
 #include <sys/wait.h>
 #include "../libft/libft.h"
 #include "../ft_printf/ft_printf.h"

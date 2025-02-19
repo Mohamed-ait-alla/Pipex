@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:39:43 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/17 15:39:46 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:59:10 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	redirect_input_from_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("Failed to open fd\n");
-		exit(126) ;
+		ft_printf("./pipex: %s\n", strerror(errno));
+		exit(errno) ;
 	}
 	dup2(fd, STDIN_FILENO);
 	close (fd);
@@ -68,8 +68,8 @@ void	redirect_output_to_file(char *file)
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC , 0644);
 	if (fd < 0)
 	{
-		perror("Failed to open fd\n");
-		exit(1);
+		ft_printf("./pipex: %s\n", strerror(errno));
+		exit(errno);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close (fd);
