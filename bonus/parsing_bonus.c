@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:30:40 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/18 09:42:49 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/20 21:31:22 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_exec_path(char **env, char *cmd)
 	{
 		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
 			return (cmd);
-		return (NULL);
+		return ("no file");
 	}
 	path = get_env_path(env);
 	env_paths = ft_split(path, ':');
