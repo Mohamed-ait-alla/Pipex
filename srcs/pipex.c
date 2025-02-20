@@ -6,11 +6,35 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:28:04 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/19 17:46:15 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:08:35 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	handle_errors(char *arg, char **env)
+{
+	char **args;
+	char *path;
+
+	args = ft_split(arg, ' ');
+	if (!args || !args[0])  // Check for empty or invalid command
+	{
+		ft_printf("./pipex: permission denied: %s\n", arg);
+		exit(126);
+	}
+	path = get_exec_path(env, args[0]);
+	if (!path)
+	{
+		ft_printf("./pipex: command not found: %s\n", arg);
+		exit(127);
+	}
+	if (ft_strncmp(path, "no file", ft_strlen(path)) == 0)
+	{
+		ft_printf("./pipex: no such file or directory: %s\n", arg);
+		exit(127);
+	}
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -43,23 +67,7 @@ int	main(int argc, char **argv, char **env)
 			if (i == 0) // First command 
 			{
 				close(fd[0]);
-				args = ft_split(argv[2], ' ');
-				if (!args || !args[0])  // Check for empty or invalid command
-				{
-					ft_printf("./pipex: permission denied: %s\n", argv[2]);
-					exit(126);
-				}
-				path = get_exec_path(env, args[0]);
-				if (!path)
-				{
-					ft_printf("./pipex: command not found: %s\n", argv[2]);
-					exit(127);
-				}
-				if (ft_strncmp(path, "no file", ft_strlen(path)) == 0)
-				{
-					ft_printf("./pipex: no such file or directory: %s\n", argv[2]);
-					exit(127);
-				}
+				handle_errors(argv[2], env);
 				redirect_input_from_file(argv[1]);
 				redirect_output_to_pipe(fd[1]);
 				close(fd[0]);
@@ -69,23 +77,7 @@ int	main(int argc, char **argv, char **env)
 			else
 			{
     			close(fd[1]);
-    			args = ft_split(argv[3], ' ');
-    			if (!args || !args[0])  // Check for empty or invalid command
-    			{
-        			ft_printf("./pipex: permission denied: %s\n", argv[3]);
-        			exit(126);
-    			}
-    			path = get_exec_path(env, args[0]);
-    			if (!path)
-    			{
-        			ft_printf("./pipex: command not found: %s\n", argv[3]);
-        			exit(127);
-    			}
-				if (ft_strncmp(path, "no file", ft_strlen(path)) == 0)
-				{
-					ft_printf("./pipex: no such file or directory: %s\n", argv[2]);
-					exit(127);
-				}
+    			handle_errors(argv[3], env);
 				redirect_input_from_pipe(fd[0]);
 				redirect_output_to_file(argv[4]);
 				close(fd[0]);
