@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:49:02 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/20 21:38:13 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:47:37 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void close_unused_pipes(int pipes[][2], int pipe_count, int except)
 		}
     }
 }
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -96,21 +95,22 @@ int	main(int argc, char **argv, char **env)
 			{
 				handle_errors(argv[i + 2], env);
 				redirect_input_from_file(argv[1]);
+				redirect_output_to_pipe(pipes[i][1]);
+				close_unused_pipes(pipes, n_of_cmds - 1, i);
+			}
+			else if (i == n_of_cmds - 1)
+			{
+				handle_errors(argv[i + 2], env);
+				redirect_input_from_pipe(pipes[i - 1][0]);
+				redirect_output_to_file(argv[argc - 1]);
+				close_unused_pipes(pipes, n_of_cmds - 1, i - 1);
 			}
 			else
 			{
 				handle_errors(argv[i + 2], env);
 				redirect_input_from_pipe(pipes[i - 1][0]);
-			}
-			if (i == n_of_cmds - 1)
-			{
-				handle_errors(argv[i + 2], env);
-				redirect_output_to_file(argv[argc - 1]);
-			}
-			else
-			{
-				handle_errors(argv[i + 2], env);
 				redirect_output_to_pipe(pipes[i][1]);
+				close_unused_pipes(pipes, n_of_cmds, i - 1);
 			}
 			close_unused_pipes(pipes, n_of_cmds - 1, -1);
 			execute_command(argv[i + 2], env);
@@ -118,16 +118,11 @@ int	main(int argc, char **argv, char **env)
 		i++;		
 	}
 	close_unused_pipes(pipes, n_of_cmds - 1, -1);
-	i = 0;
-	while (i < n_of_cmds - 1)
-	{
-		waitpid(pids[i], NULL, 0);
-		i++;
-	}
-	waitpid(pids[n_of_cmds], &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
-		// exit with last child's exit code
-		exit(WEXITSTATUS(status));
-	}
+    for (int i = 0; i < n_of_cmds; i++) {
+        waitpid(pids[i], &status, 0);
+        if (WIFEXITED(status) && i == n_of_cmds - 1) {
+            exit(WEXITSTATUS(status)); // Exit with last command's status
+        }
+    }
 	return (0);
 }
