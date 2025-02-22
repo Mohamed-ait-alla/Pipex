@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:49:02 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/22 11:47:04 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:08:50 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,13 @@ int	main(int argc, char **argv, char **env)
 		i++;		
 	}
 	close_unused_pipes(pipes, n_of_cmds - 1, -1);
-    for (int i = 0; i < n_of_cmds; i++) {
-        waitpid(pids[i], &status, 0);
-        if (WIFEXITED(status) && i == n_of_cmds - 1) {
-            exit(WEXITSTATUS(status)); // Exit with last command's status
-        }
-    }
+	i = 0;
+	while (i < n_of_cmds)
+	{
+		waitpid(pids[i], &status, 0);
+		if (WIFEXITED(status) && i == n_of_cmds - 1)
+			exit(WEXITSTATUS(status)); // Exit with last command's status
+		i++;
+	}
 	return (0);
 }

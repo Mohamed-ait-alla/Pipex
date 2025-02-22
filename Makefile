@@ -9,8 +9,6 @@ SRCS = srcs/pipex.c \
 	   srcs/parsing.c \
 	   srcs/redirect_io.c \
 	   srcs/run_commands.c \
-	   ./ft_printf/ft_printf.c \
-	   ./ft_printf/ft_printf_utils.c \
 	   ./get_next_line/get_next_line.c \
 	   ./get_next_line/get_next_line_utils.c
 
@@ -19,8 +17,6 @@ BSRCS = bonus/pipex_bonus.c \
 		bonus/redirect_io_bonus.c \
 		bonus/run_commands_bonus.c \
 		bonus/here_doc.c \
-		ft_printf/ft_printf.c \
-		ft_printf/ft_printf_utils.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c
 
