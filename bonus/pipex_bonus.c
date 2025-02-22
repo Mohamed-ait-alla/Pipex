@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:49:02 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/21 21:47:37 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/22 10:45:14 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ int	main(int argc, char **argv, char **env)
 	if (argc < 4)
 		return (1);
 	// check for here-doc arg, if is exist swicht to here-docoment
-	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	if (ft_strcmp(argv[1], "here_doc") || ft_strcmp(argv[1], "here_doc") == 0)
 	{
 		// here-doc execution 
+		if (ft_strcmp(argv[1], "here_doc") != 0)
+			exit(1);
 		n_of_cmds = argc - 4;
 		here_doc_execution(argc, argv, env, n_of_cmds);
 		exit (0);
