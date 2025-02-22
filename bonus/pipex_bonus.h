@@ -6,12 +6,15 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/20 15:28:57 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/22 11:50:26 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_BONUS_H
 #define PIPEX_BONUS_H
+#define ERR_NO_FILE "./pipex: no such file or directory: "
+#define ERR_PERMISSION "./pipex: permission denied: "
+#define ERR_CMD_NOT_FOUND "./pipex: command not found: "
 #include <stdio.h> // why you're look at me
 #include <unistd.h>
 #include <fcntl.h>
@@ -19,10 +22,10 @@
 #include <errno.h> // for errno flags
 #include <sys/wait.h>
 #include "../libft/libft.h"
-#include "../ft_printf/ft_printf.h"
 #include "../get_next_line/get_next_line.h"
 
 
+void	handle_errors(char *arg, char **env);
 char	*get_exec_path(char **env, char *cmd);
 void	redirect_input_from_file(char *file);
 void	redirect_input_from_pipe(int read_pipe_end);

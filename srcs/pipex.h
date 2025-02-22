@@ -6,12 +6,15 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:28:14 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/18 10:40:36 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/22 11:54:45 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 #define PIPEX_H
+#define ERR_NO_FILE "./pipex: no such file or directory: "
+#define ERR_PERMISSION "./pipex: permission denied: "
+#define ERR_CMD_NOT_FOUND "./pipex: command not found: "
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -19,7 +22,6 @@
 #include <string.h>
 #include <sys/wait.h>
 #include "../libft/libft.h"
-#include "../ft_printf/ft_printf.h"
 #include "../get_next_line/get_next_line.h"
 
 void	execute_command(char *cmd, char **env);
