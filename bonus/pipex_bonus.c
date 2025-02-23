@@ -6,131 +6,83 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:49:02 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/22 15:08:50 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:28:35 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	handle_errors(char *arg, char **env)
+void	wait_for_childs(t_pipex *px)
 {
-	char **args;
-	char *path;
+	int	status;
+	int	i;
 
-	args = ft_split(arg, ' ');
-	if (!args || !args[0])  // Check for empty or invalid command
+	i = 0;
+	while (i < px->n_cmds)
 	{
-		ft_putstr_fd(ERR_PERMISSION, STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		exit(126);
-	}
-	path = get_exec_path(env, args[0]);
-	if (!path)
-	{
-		ft_putstr_fd(ERR_CMD_NOT_FOUND, STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		exit(127);
-	}
-	if (ft_strncmp(path, "no file", ft_strlen(path)) == 0)
-	{
-		ft_putstr_fd(ERR_NO_FILE, STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		exit(127);
+		waitpid(px->pids[i], &status, 0);
+		if (WIFEXITED(status) && i == px->n_cmds - 1)
+		{
+			free(px->pipes);
+			free(px->pids);
+			exit(WEXITSTATUS(status));
+		}
+		i++;
 	}
 }
 
-void close_unused_pipes(int pipes[][2], int pipe_count, int except)
+void	create_pipes(t_pipex *px)
 {
-    for (int i = 0; i < pipe_count; i++) {
+	int	i;
+
+	i = 0;
+	while (i < px->n_cmds - 1)
+	{
+		if (pipe(px->pipes[i]) == -1)
+			handle_syscall_errors(-2);
+		i++;
+	}
+}
+
+void	close_unused_pipes(int pipes[][2], int pipe_count, int except)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipe_count)
+	{
 		if (i != except)
 		{
-        	close(pipes[i][0]);
-        	close(pipes[i][1]);	
+			close(pipes[i][0]);
+			close(pipes[i][1]);
 		}
-    }
+		i++;
+	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	int	n_of_cmds;
-	n_of_cmds = argc - 3;
-	int	pipes[n_of_cmds - 1][2];
-	int pids[n_of_cmds];
-	int	status;
-	int	i;
-	
-	// check the arguments
-	if (argc < 4)
+	t_pipex	px;
+
+	px.n_cmds = argc - 3;
+	px.argv = argv;
+	px.env = env;
+	px.argc = argc;
+	if (argc <= 4)
 		return (1);
-	// check for here-doc arg, if is exist swicht to here-docoment
 	if (ft_strcmp(argv[1], "here_doc") == 0)
 	{
-		// here-doc execution 
-		n_of_cmds = argc - 4;
-		here_doc_execution(argc, argv, env, n_of_cmds);
+		px.n_cmds = argc - 4;
+		here_doc_execution(argc, argv, env, px.n_cmds);
 		exit (0);
 	}
-	// create pipes
-	i = 0;
-	while (i < n_of_cmds - 1)
-	{
-		if (pipe(pipes[i]) == -1)
-		{
-			perror("Error in creating pipes\n");
-			return (1);
-		}
-		i++;
-	}
-	// fork child processes that will exectutes the commands
-	i = 0;
-	while (i < n_of_cmds)
-	{
-		pids[i] = fork();
-		if (pids[i] == -1)
-		{
-			perror("Failed to create a child process\n");
-			return (2);
-		}
-		if (pids[i] == 0)
-		{
-			// child processes
-			if (i == 0) // redirection input to file1
-			{
-				handle_errors(argv[i + 2], env);
-				redirect_input_from_file(argv[1]);
-				redirect_output_to_pipe(pipes[i][1]);
-				close_unused_pipes(pipes, n_of_cmds - 1, i);
-			}
-			else if (i == n_of_cmds - 1)
-			{
-				handle_errors(argv[i + 2], env);
-				redirect_input_from_pipe(pipes[i - 1][0]);
-				redirect_output_to_file(argv[argc - 1]);
-				close_unused_pipes(pipes, n_of_cmds - 1, i - 1);
-			}
-			else
-			{
-				handle_errors(argv[i + 2], env);
-				redirect_input_from_pipe(pipes[i - 1][0]);
-				redirect_output_to_pipe(pipes[i][1]);
-				close_unused_pipes(pipes, n_of_cmds, i - 1);
-			}
-			close_unused_pipes(pipes, n_of_cmds - 1, -1);
-			execute_command(argv[i + 2], env);
-		}
-		i++;		
-	}
-	close_unused_pipes(pipes, n_of_cmds - 1, -1);
-	i = 0;
-	while (i < n_of_cmds)
-	{
-		waitpid(pids[i], &status, 0);
-		if (WIFEXITED(status) && i == n_of_cmds - 1)
-			exit(WEXITSTATUS(status)); // Exit with last command's status
-		i++;
-	}
+	px.pipes = malloc((px.n_cmds - 1) * sizeof(int [2]));
+	px.pids = malloc(px.n_cmds * sizeof(int));
+	if (!px.pipes || !px.pids)
+		handle_syscall_errors(-1);
+	create_pipes(&px);
+	fork_and_execute_commands(&px);
+	close_unused_pipes(px.pipes, px.n_cmds - 1, -1);
+	wait_for_childs(&px);
 	return (0);
 }

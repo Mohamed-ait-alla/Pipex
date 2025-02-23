@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:20:44 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/22 11:51:55 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:32:41 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	redirect_input_from_file(char *file)
 {
 	int	fd;
-	
+
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
@@ -32,9 +32,8 @@ void	redirect_input_from_file_here_doc(char *limiter)
 	char	*line;
 	char	*h_limiter;
 	int		fd;
-	
 
-	fd = open("/tmp/tmp_data", O_WRONLY | O_CREAT | O_APPEND , 0644);
+	fd = open("/tmp/tmp_data", O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
 		perror("Failed to open here-doc fds\n");
@@ -50,7 +49,6 @@ void	redirect_input_from_file_here_doc(char *limiter)
 	}
 	close (fd);
 	free(h_limiter);
-	
 	fd = open("/tmp/tmp_data", O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	close (fd);
@@ -65,8 +63,8 @@ void	redirect_input_from_pipe(int read_pipe_end)
 void	redirect_output_to_file(char *file)
 {
 	int	fd;
-	
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC , 0644);
+
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		ft_putstr_fd(ERR_PERMISSION, STDERR_FILENO);

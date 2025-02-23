@@ -6,16 +6,16 @@ NAME = pipex
 B_NAME = pipex_bonus
 
 SRCS = srcs/pipex.c \
-	   srcs/parsing.c \
+	   srcs/pare_args.c \
 	   srcs/redirect_io.c \
 	   srcs/run_commands.c \
-	   ./get_next_line/get_next_line.c \
-	   ./get_next_line/get_next_line_utils.c
+	   srcs/error_handling.c \
 
 BSRCS = bonus/pipex_bonus.c \
-		bonus/parsing_bonus.c \
+		bonus/parse_args_bonus.c \
 		bonus/redirect_io_bonus.c \
 		bonus/run_commands_bonus.c \
+		bonus/error_handling_bonus.c \
 		bonus/here_doc.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c

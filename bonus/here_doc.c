@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/22 17:07:10 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:58:02 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	here_doc_execution(int argc, char **argv, char **env, int n_of_cmds)
 				redirect_output_to_pipe(pipes[i][1]);
 				close_unused_pipes(pipes, n_of_cmds - 1, i - 1);
 			}
-			handle_errors(argv[i + 3], env);
+			// handle_errors(argv[i + 3], env);
 			close_unused_pipes(pipes, n_of_cmds - 1, -1);
 			execute_command(argv[i + 3], env);
 		}
