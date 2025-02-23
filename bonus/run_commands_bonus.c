@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:13:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/23 20:30:18 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:32:41 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static void	execute_child(t_pipex *px, int i)
 {
 	if (i == 0)
 	{
-		redirect_input_from_file(px->argv[1]);
+		if (px->is_here_doc)
+			redirect_input_from_file_here_doc(px->argv[2]);
+		else
+			redirect_input_from_file(px->argv[1]);
 		redirect_output_to_pipe(px->pipes[i][1]);
 	}
 	else if (i == px->n_cmds - 1)
@@ -48,7 +51,7 @@ static void	execute_child(t_pipex *px, int i)
 		redirect_output_to_pipe(px->pipes[i][1]);
 	}
 	close_unused_pipes(px->pipes, px->n_cmds - 1, -1);
-	execute_command(px->argv[i + 2], px->env);
+	execute_command(px->argv[i + px->cmd_offset], px->env);
 }
 
 void	fork_and_execute_commands(t_pipex *px)
@@ -63,6 +66,12 @@ void	fork_and_execute_commands(t_pipex *px)
 			handle_syscall_errors(-3);
 		if (px->pids[i] == 0)
 			execute_child(px, i);
+		if (px->is_here_doc)
+		{
+			if (i == 0)
+				wait(NULL);
+		}
 		i++;
 	}
+	close_unused_pipes(px->pipes, px->n_cmds - 1, -1);
 }

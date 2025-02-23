@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/23 18:30:56 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:40:05 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,15 @@ typedef struct s_pipex
 	int		(*pipes)[2];
 	int		*pids;
 	int		argc;
+	int		is_here_doc;
+	int		cmd_offset;
 	char	**argv;
 	char	**env;
 }	t_pipex;
 
+void	wait_for_childs(t_pipex *px);
+void	create_pipes(t_pipex *px);
+void	allocate_pipes_and_pids(t_pipex *px);
 void	fork_and_execute_commands(t_pipex *px);
 void	handle_syscall_errors(int err_flag);
 void	handle_errors(char *arg, char *path, char **args);
@@ -43,7 +48,7 @@ void	redirect_output_to_file(char *file);
 void	redirect_output_to_pipe(int write_pipe_end);
 void	close_unused_pipes(int pipes[][2], int pipe_count, int except);
 void	execute_command(char *cmd, char **env);
-void	here_doc_execution(int argc, char **argv, char **env, int n_of_cmds);
+void	here_doc_execution(t_pipex *px);
 void	redirect_input_from_file_here_doc(char *limiter);
 
 #endif
