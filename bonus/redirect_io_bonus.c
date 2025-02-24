@@ -6,21 +6,24 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:20:44 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/23 18:32:41 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:42:47 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	redirect_input_from_file(char *file)
+void	redirect_input_from_file(t_pipex *px)
 {
 	int	fd;
 
-	fd = open(file, O_RDONLY);
+	fd = open(px->argv[1], O_RDONLY);
 	if (fd < 0)
 	{
 		ft_putstr_fd(ERR_PERMISSION, STDERR_FILENO);
+		ft_putstr_fd(px->argv[1], STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
+		free(px->pipes);
+		free(px->pids);
 		exit(1);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -36,7 +39,7 @@ void	redirect_input_from_file_here_doc(char *limiter)
 	fd = open("/tmp/tmp_data", O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
-		perror("Failed to open here-doc fds\n");
+		perror("Failed to open temprary file\n");
 		exit(1);
 	}
 	line = get_next_line(0);
@@ -47,6 +50,8 @@ void	redirect_input_from_file_here_doc(char *limiter)
 		free(line);
 		line = get_next_line(0);
 	}
+	free(line);
+	get_next_line(-2);
 	close (fd);
 	free(h_limiter);
 	fd = open("/tmp/tmp_data", O_RDONLY);
@@ -60,15 +65,18 @@ void	redirect_input_from_pipe(int read_pipe_end)
 	close (read_pipe_end);
 }
 
-void	redirect_output_to_file(char *file)
+void	redirect_output_to_file(t_pipex *px)
 {
 	int	fd;
 
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(px->argv[px->argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		ft_putstr_fd(ERR_PERMISSION, STDERR_FILENO);
+		ft_putstr_fd(px->argv[px->argc - 1], STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
+		free(px->pids);
+		free(px->pipes);
 		exit(1);
 	}
 	dup2(fd, STDOUT_FILENO);

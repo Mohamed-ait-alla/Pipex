@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:28:04 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 10:30:35 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:34:32 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 
 	status = 0;
 	if (argc != 5)
-		exit(1);
+		handle_syscall_errors('a');
 	if (pipe(fd) == -1)
 		handle_syscall_errors('p');
 	i = 0;

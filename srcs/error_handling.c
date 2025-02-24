@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:37:54 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 10:31:44 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:41:15 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,11 @@ void	handle_syscall_errors(char c)
 	{
 		perror("fork has been failed to create a child process\n");
 		exit (1);
+	}
+	else if (c == 'a')
+	{
+		ft_putstr_fd("Error: Too few arguments!\n", STDERR_FILENO);
+		ft_putstr_fd("Usage: ./pipex infile cmd1 cmd2 outfile\n", 2);
+		exit (EXIT_FAILURE);
 	}
 }

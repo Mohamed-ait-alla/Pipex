@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:13:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 14:02:44 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:24:22 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ static void	execute_child(t_pipex *px, int i)
 		if (px->is_here_doc)
 			redirect_input_from_file_here_doc(px->argv[2]);
 		else
-			redirect_input_from_file(px->argv[1]);
+			redirect_input_from_file(px);
 		redirect_output_to_pipe(px->pipes[i][1]);
 	}
 	else if (i == px->n_cmds - 1)
 	{
 		redirect_input_from_pipe(px->pipes[i - 1][0]);
-		redirect_output_to_file(px->argv[px->argc - 1]);
+		redirect_output_to_file(px);
 	}
 	else
 	{
