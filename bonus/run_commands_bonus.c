@@ -6,20 +6,20 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:13:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/23 21:32:41 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:02:44 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	execute_command(char *cmd, char **env)
+void	execute_command(t_pipex *px, char *cmd)
 {
 	char	**args;
 	char	*path;
 
 	args = ft_split(cmd, ' ');
-	path = get_exec_path(env, args[0]);
-	handle_errors(cmd, path, args);
+	path = get_exec_path(px, args[0]);
+	handle_errors(px, cmd, path, args);
 	if (!path)
 	{
 		perror("./pipex: \n");
@@ -51,7 +51,7 @@ static void	execute_child(t_pipex *px, int i)
 		redirect_output_to_pipe(px->pipes[i][1]);
 	}
 	close_unused_pipes(px->pipes, px->n_cmds - 1, -1);
-	execute_command(px->argv[i + px->cmd_offset], px->env);
+	execute_command(px, px->argv[i + px->cmd_offset]);
 }
 
 void	fork_and_execute_commands(t_pipex *px)

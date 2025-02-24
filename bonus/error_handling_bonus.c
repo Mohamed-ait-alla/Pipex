@@ -6,19 +6,20 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:05:03 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/23 18:35:45 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:03:15 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	handle_errors(char *arg, char *path, char **args)
+void	handle_errors(t_pipex *px, char *arg, char *path, char **args)
 {
 	if (!args || !args[0])
 	{
 		ft_putstr_fd(ERR_PERMISSION, STDERR_FILENO);
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
+		ft_cleanup(px, args);
 		exit(126);
 	}
 	if (!path)
@@ -26,6 +27,7 @@ void	handle_errors(char *arg, char *path, char **args)
 		ft_putstr_fd(ERR_CMD_NOT_FOUND, STDERR_FILENO);
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
+		ft_cleanup(px, args);
 		exit(127);
 	}
 	if (ft_strncmp(path, "no file", ft_strlen(path)) == 0)
@@ -33,6 +35,7 @@ void	handle_errors(char *arg, char *path, char **args)
 		ft_putstr_fd(ERR_NO_FILE, STDERR_FILENO);
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
+		ft_cleanup(px, args);
 		exit(127);
 	}
 }

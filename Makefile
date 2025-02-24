@@ -16,6 +16,7 @@ BSRCS = bonus/pipex_bonus.c \
 		bonus/redirect_io_bonus.c \
 		bonus/run_commands_bonus.c \
 		bonus/error_handling_bonus.c \
+		bonus/bns_utils.c \
 		bonus/here_doc.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c
