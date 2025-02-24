@@ -1,12 +1,12 @@
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror 
+CFLAGS =  -Wall -Wextra -Werror -g3
 RM = rm -f
 
 NAME = pipex
 B_NAME = pipex_bonus
 
 SRCS = srcs/pipex.c \
-	   srcs/pare_args.c \
+	   srcs/parse_args.c \
 	   srcs/redirect_io.c \
 	   srcs/run_commands.c \
 	   srcs/error_handling.c \

@@ -6,11 +6,21 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:28:04 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/23 14:43:43 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:30:35 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	ft_cleanup(char **container)
+{
+	int	i;
+
+	i = 0;
+	while (container[i])
+		free(container[i++]);
+	free(container);
+}
 
 void	close_unused_pipes(int fd[2])
 {
@@ -25,6 +35,7 @@ int	main(int argc, char **argv, char **env)
 	int	status;
 	int	i;
 
+	status = 0;
 	if (argc != 5)
 		exit(1);
 	if (pipe(fd) == -1)
