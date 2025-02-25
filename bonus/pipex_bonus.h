@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 18:24:02 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:35:30 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # define ERR_NO_FILE "./pipex: no such file or directory: "
 # define ERR_PERMISSION "./pipex: permission denied: "
 # define ERR_CMD_NOT_FOUND "./pipex: command not found: "
+# define ERR_USAGE "Usage: ./pipex infile cmd1 cmd2 ... cmdn outfile\n"
+# define ERR_USAGE_HD "Usage: ./pipex here_doc limitter cmd1 cmd2 outfile\n"
 # include <stdio.h> // why you're look at me
 # include <unistd.h>
 # include <fcntl.h>

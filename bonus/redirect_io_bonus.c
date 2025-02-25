@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:20:44 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 22:16:45 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:44:11 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	redirect_output_to_file(t_pipex *px)
 {
 	int	fd;
 
-	fd = open(px->argv[px->argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (px->is_here_doc)
+		fd = open(px->argv[px->argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd = open(px->argv[px->argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		ft_putstr_fd(ERR_PERMISSION, STDERR_FILENO);
