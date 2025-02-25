@@ -6,36 +6,35 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:05:03 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/25 09:36:06 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:40:16 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	handle_errors(t_pipex *px, char *arg, char *path, char **args)
+void	display_error(t_pipex *px, char *error_msg, char *arg, char **args)
+{
+	ft_putstr_fd(error_msg, STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	ft_cleanup(px, args);
+}
+
+void	handle_shell_errors(t_pipex *px, char *arg, char *path, char **args)
 {
 	if (!args || !args[0])
 	{
-		ft_putstr_fd(ERR_PERMISSION, STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		ft_cleanup(px, args);
+		display_error(px, ERR_PERMISSION, arg, args);
 		exit(126);
 	}
 	if (!path)
 	{
-		ft_putstr_fd(ERR_CMD_NOT_FOUND, STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		ft_cleanup(px, args);
+		display_error(px, ERR_CMD_NOT_FOUND, arg, args);
 		exit(127);
 	}
 	if (ft_strncmp(path, "no file", ft_strlen(path)) == 0)
 	{
-		ft_putstr_fd(ERR_NO_FILE, STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-		ft_cleanup(px, args);
+		display_error(px, ERR_NO_FILE, arg, args);
 		exit(127);
 	}
 }

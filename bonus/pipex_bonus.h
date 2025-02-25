@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/25 09:35:30 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:44:37 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	create_pipes(t_pipex *px);
 void	allocate_pipes_and_pids(t_pipex *px);
 void	fork_and_execute_commands(t_pipex *px);
 void	handle_syscall_errors(int err_flag);
-void	handle_errors(t_pipex *px, char *arg, char *path, char **args);
+void	display_error(t_pipex *px, char *error_msg, char *arg, char **args);
+void	handle_shell_errors(t_pipex *px, char *arg, char *path, char **args);
 char	*get_exec_path(t_pipex *px, char *cmd);
 void	redirect_input_from_file(t_pipex *px);
 void	redirect_input_from_pipe(int read_pipe_end);

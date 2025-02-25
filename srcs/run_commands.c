@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:47:31 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 10:27:08 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:30:16 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	execute_command(char *cmd, char **env)
 	args = ft_split(cmd, ' ');
 	path = get_exec_path(env, args[0]);
 	handle_shell_errors(cmd, path, args);
-	if (!path)
+	if (!path || ft_strncmp(path, "no permission", ft_strlen(path)) == 0)
 	{
-		perror("./pipex: ");
-		exit(errno);
+		display_error(ERR_PERMISSION, cmd, args);
+		exit(126);
 	}
 	execve(path, args, NULL);
 	perror("Failed to create new process.");
