@@ -28,3 +28,21 @@ dup() => this function takes as a parameter an fd, and it duplicate or clone the
 dup2() => this function is similar to dup() but it takes another parameter called fd2 and its value that dup2() will
 		  assign to the duplicated file , and when an fd is already exist it close it and relplace it with the duplicated
 		  even if it 1 or 0 or 2 
+
+		#____________built-in vs external commands____________#
+
+built-in commands: are commands that build in the shell itself and doesn't require a path envirement to found it,
+					and also doesn't require a new process to execute them. they get executed in main the process itself.
+				 	and they are faster than external because external needs a new process.
+
+external commands: are commands that are stored as separate executable files (binaries or scripts) and located in PATH envirement
+					variable and require the shell to create new process using fork().
+
+=> you can check if the command is built-in or not using type command.
+
+		#____________copy-on-write (COW)_____________#
+
+COW  : is a resource management technique in memory managements between processes especially parents with childs. the main idea of COW
+		is that when a parent 1 creates a child 2 they have the same exactly memory space, but when the parent 1 wants to modify a page memory
+		then the COW concept will come and will just have the copy of the page that he wants to modify, and this way it does't affect the the child 
+		process.

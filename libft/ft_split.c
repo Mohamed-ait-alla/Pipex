@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:22:51 by mait-all          #+#    #+#             */
-/*   Updated: 2024/11/04 18:16:00 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:00:34 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static size_t	ft_get_len(const char *s, char c)
 
 	len = 0;
 	i = 0;
-	while (s[i] && s)
+	while (s && s[i])
 	{
 		while (s[i] && (s[i] == c))
 			i++;
@@ -84,7 +84,7 @@ char	**ft_split(char const *s, char c)
 	if (!strings)
 		return (NULL);
 	i = 0;
-	while (*s && s)
+	while (s && *s)
 	{
 		while (*s && (*s == c))
 			s++;

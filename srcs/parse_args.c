@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:48:47 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/25 14:56:21 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:01:22 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*search_exec_path(char **env_paths, char *cmd)
 	int		i;
 
 	i = 0;
-	while (env_paths[i])
+	while (env_paths && env_paths[i])
 	{
 		holder = ft_strjoin(env_paths[i], "/");
 		exec_path = ft_strjoin(holder, cmd);
@@ -37,7 +37,7 @@ char	*get_env_path(char **env)
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 			return (env[i] + 5);
