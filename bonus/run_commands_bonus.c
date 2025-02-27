@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:13:42 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/25 15:45:06 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:14:08 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	execute_child(t_pipex *px, int i)
 	if (i == 0)
 	{
 		if (px->is_here_doc)
-			redirect_input_from_file_here_doc(px->argv[2]);
+			redirect_input_from_file_here_doc(px);
 		else
 			redirect_input_from_file(px);
 		redirect_output_to_pipe(px->pipes[i][1]);

@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:49:02 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 22:45:25 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:26:38 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	main(int argc, char **argv, char **env)
 		px.n_cmds = argc - 4;
 		px.is_here_doc = 1;
 		px.cmd_offset = 3;
+		px.tmpfile = get_tmp_file();
 		here_doc_execution(&px);
-		exit (0);
 	}
 	allocate_pipes_and_pids(&px);
 	create_pipes(&px);

@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:58:17 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 15:00:22 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:22:35 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ void	wait_for_childs(t_pipex *px)
 		if (WIFEXITED(status) && (i == px->n_cmds - 1))
 		{
 			if (px->is_here_doc)
-				unlink("/tmp/tmp_data");
+			{
+				if (unlink(px->tmpfile) == -1)
+					perror("failed to remove tmpfile\n");
+				free(px->tmpfile);
+			}
 			if (px->pipes)
 				free(px->pipes);
 			if (px->pids)

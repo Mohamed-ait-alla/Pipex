@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:46:51 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/25 15:44:37 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:18:01 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct s_pipex
 	int		cmd_offset;
 	char	**argv;
 	char	**env;
+	char	*tmpfile;
 }	t_pipex;
 
+char	*get_tmp_file(void);
 void	ft_cleanup(t_pipex *px, char **container);
 void	wait_for_childs(t_pipex *px);
 void	create_pipes(t_pipex *px);
@@ -53,6 +55,6 @@ void	redirect_output_to_pipe(int write_pipe_end);
 void	close_unused_pipes(int pipes[][2], int pipe_count, int except);
 void	execute_command(t_pipex *px, char *cmd);
 void	here_doc_execution(t_pipex *px);
-void	redirect_input_from_file_here_doc(char *limiter);
+void	redirect_input_from_file_here_doc(t_pipex *px);
 
 #endif

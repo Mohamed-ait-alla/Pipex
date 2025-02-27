@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:20:44 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/25 09:44:11 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:20:23 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ void	redirect_input_from_file(t_pipex *px)
 	close (fd);
 }
 
-void	redirect_input_from_file_here_doc(char *limiter)
+void	redirect_input_from_file_here_doc(t_pipex *px)
 {
 	char	*line;
 	char	*h_limiter;
 	int		fd;
 
-	fd = open("/tmp/tmp_data", O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(px->tmpfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
 		perror("Failed to open temprary file\n");
 		exit(1);
 	}
 	line = get_next_line(0);
-	h_limiter = ft_strjoin(limiter, "\n");
+	h_limiter = ft_strjoin(px->argv[2], "\n");
 	while (line && (ft_strncmp(line, h_limiter, ft_strlen(line)) != 0))
 	{
 		write(fd, line, ft_strlen(line));
@@ -54,7 +54,7 @@ void	redirect_input_from_file_here_doc(char *limiter)
 	get_next_line(-2);
 	close (fd);
 	free(h_limiter);
-	fd = open("/tmp/tmp_data", O_RDONLY);
+	fd = open(px->tmpfile, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	close (fd);
 }

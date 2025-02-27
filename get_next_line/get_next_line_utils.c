@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:51:18 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/23 21:43:12 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:05:45 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ size_t	ft_gnlstrlen(const char *s)
 	size_t	len;
 
 	len = 0;
-	while (s[len] && s)
+	while (s && s[len])
 		len++;
 	return (len);
 }
