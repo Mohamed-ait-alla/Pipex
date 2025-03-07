@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:58:17 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/27 20:22:35 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/02/28 09:46:37 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_cleanup(t_pipex *px, char **container)
 		free(px->pids);
 	if (px && px->pipes)
 		free(px->pipes);
+	if (px && px->tmpfile)
+		free(px->tmpfile);
 }
 
 void	wait_for_childs(t_pipex *px)
