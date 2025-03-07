@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:37:54 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/25 15:31:33 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:36:19 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	handle_shell_errors(char *arg, char *path, char **args)
 	}
 }
 
-void	handle_syscall_errors(char c)
+void	handle_syscall_errors(char c, int n_args)
 {
 	if (c == 'p')
 	{
@@ -53,7 +53,10 @@ void	handle_syscall_errors(char c)
 	}
 	else if (c == 'a')
 	{
-		ft_putstr_fd("Error: Too few arguments!\n", STDERR_FILENO);
+		if (n_args < 5)
+			ft_putstr_fd("Error: Too few arguments!\n", STDERR_FILENO);
+		else
+			ft_putstr_fd("Error: Too many arguments!\n", STDERR_FILENO);
 		ft_putstr_fd("Usage: ./pipex infile cmd1 cmd2 outfile\n", 2);
 		exit (EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: mait-all <mait-all@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:28:04 by mait-all          #+#    #+#             */
-/*   Updated: 2025/02/24 15:34:32 by mait-all         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:31:48 by mait-all         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ int	main(int argc, char **argv, char **env)
 
 	status = 0;
 	if (argc != 5)
-		handle_syscall_errors('a');
+		handle_syscall_errors('a', argc);
 	if (pipe(fd) == -1)
-		handle_syscall_errors('p');
+		handle_syscall_errors('p', argc);
 	i = 0;
 	while (i < 2)
 	{
 		pids[i] = fork();
 		if (pids[i] == -1)
-			handle_syscall_errors('f');
+			handle_syscall_errors('f', argc);
 		if (pids[i] == 0)
 			execute_child(argv, env, fd, i);
 		i++;
