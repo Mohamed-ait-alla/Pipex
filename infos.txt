@@ -46,3 +46,19 @@ COW  : is a resource management technique in memory managements between processe
 		is that when a parent 1 creates a child 2 they have the same exactly memory space, but when the parent 1 wants to modify a page memory
 		then the COW concept will come and will just have the copy of the page that he wants to modify, and this way it does't affect the the child 
 		process.
+
+		#__________Process control block (PCB)__________#
+
+(PCB): used to track the process's execution satatus. each block of memory contains infos about the process state, program conter, stack pointer, satatus
+		of opened files ..., and all this infos is required and must be saved when the prcess is switched from one state to another, and is a data structure
+		by the os to manage infos about a process.
+
+(IPC): Inter process communication (IPC) allows different programs or processes running on a computer to share information with each other. IPC allows
+		 processes to communicate by using different techniques like sharing memory, sending messages, or using files. and the two fundamental models of IPC are:
+		  -- shared memory : it requires processes to share some variables
+		  -- message passing
+		  -- semaphores and etc..
+
+context-switching: involes saving the context or state of a running process so that it can be restored later, and then loading the context or state of another process
+					and run it. when a context switch occurs, the kernel saves the state of the old process in its (PCB) and loads the saved context of the new process
+					scheduled to run.
